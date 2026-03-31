@@ -29,6 +29,7 @@ export default async function DashboardPage() {
       <BudgetProgress
         initialBudget={budgetData?.budget}
         currentExpenses={budgetData?.currentExpenses || 0}
+        accountId={defaultAccount?.id} // ✅ ADD THIS
       />
 
       {/* Dashboard Overview */}
