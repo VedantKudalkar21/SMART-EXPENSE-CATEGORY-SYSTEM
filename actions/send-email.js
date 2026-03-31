@@ -2,7 +2,7 @@
 
 import { Resend } from "resend";
 import { render } from "@react-email/render";
-import EmailTemplate from "@/app/emails/template"; // adjust path
+import EmailTemplate from "@/emails/template"; // adjust path
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
