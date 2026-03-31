@@ -377,8 +377,8 @@ export function TransactionTable({ transactions }) {
                         : "text-green-500"
                     )}
                   >
-                    {transaction.type === "EXPENSE" ? "-" : "+"}$
-                    {transaction.amount.toFixed(2)}
+                    {transaction.type === "EXPENSE" ? "-" : "+"}₹
+                    {transaction.amount.toLocaleString("en-IN")}
                   </TableCell>
                   <TableCell>
                     {transaction.isRecurring ? (

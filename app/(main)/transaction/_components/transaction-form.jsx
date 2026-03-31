@@ -160,7 +160,7 @@ export function AddTransactionForm({
           <Input
             type="number"
             step="0.01"
-            placeholder="0.00"
+            placeholder="₹ 0.00"
             {...register("amount")}
           />
           {errors.amount && (
@@ -180,7 +180,7 @@ export function AddTransactionForm({
             <SelectContent>
               {accounts.map((account) => (
                 <SelectItem key={account.id} value={account.id}>
-                  {account.name} (${parseFloat(account.balance).toFixed(2)})
+                  {account.name} (₹{parseFloat(account.balance).toLocaleString("en-IN")})
                 </SelectItem>
               ))}
               <CreateAccountDrawer>
