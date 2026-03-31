@@ -31,7 +31,7 @@ const clerk = clerkMiddleware(async (auth, req) => {
 });
 
 export default async function middleware(req) {
-  // ✅ CRITICAL FIX
+  // ✅ FIX HERE
   if (req.nextUrl.pathname.startsWith("/api/inngest")) {
     return NextResponse.next();
   }
@@ -40,8 +40,5 @@ export default async function middleware(req) {
 }
 
 export const config = {
-  matcher: [
-    "/((?!_next|.*\\..*|api/inngest).*)",
-    "/api/(?!inngest).*",
-  ],
+  matcher: ["/((?!_next|.*\\..*).*)"],
 };
