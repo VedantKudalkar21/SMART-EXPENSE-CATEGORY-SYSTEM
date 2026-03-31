@@ -1,4 +1,3 @@
-import arcjet, { createMiddleware, detectBot, shield } from "@arcjet/next";
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
@@ -8,18 +7,12 @@ const isProtectedRoute = createRouteMatcher([
   "/transaction(.*)",
 ]);
 
-const aj = arcjet({
-  key: process.env.ARCJET_KEY,
-  rules: [
-    shield({ mode: "LIVE" }),
-    detectBot({
-      mode: "LIVE",
-      allow: ["CATEGORY:SEARCH_ENGINE", "GO_HTTP"],
-    }),
-  ],
-});
+export default clerkMiddleware(async (auth, req) => {
+  // Skip inngest
+  if (req.nextUrl.pathname.startsWith("/api/inngest")) {
+    return NextResponse.next();
+  }
 
-const clerk = clerkMiddleware(async (auth, req) => {
   const { userId } = await auth();
 
   if (!userId && isProtectedRoute(req)) {
@@ -29,15 +22,6 @@ const clerk = clerkMiddleware(async (auth, req) => {
 
   return NextResponse.next();
 });
-
-export default async function middleware(req) {
-  // ✅ FIX HERE
-  if (req.nextUrl.pathname.startsWith("/api/inngest")) {
-    return NextResponse.next();
-  }
-
-  return createMiddleware(aj, clerk)(req);
-}
 
 export const config = {
   matcher: ["/((?!_next|.*\\..*).*)"],
